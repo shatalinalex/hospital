@@ -1,8 +1,8 @@
 <?php
 return array(
-	'username' => 'dvelum',
-	'password' => '',
-	'dbname'   => 'dvelum_5',
+	'username' => 'hospital',
+	'password' => '3X5n9O3v3X5n9O3v',
+	'dbname'   => 'hospital',
 	'host'     => 'localhost',
 	'charset'  => 'UTF8',
 	'prefix'   => 'dv_',
