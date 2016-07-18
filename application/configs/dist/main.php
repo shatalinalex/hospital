@@ -13,7 +13,7 @@ return array(
      * 2 - test (development mode + test DB)
      * 3 - installation mode
      */
-    'development' => 3,
+    'development' => 0,
     /*
      * Development version (used by use_orm_build_log)
      */

@@ -445,6 +445,9 @@ class Install_Controller {
         );
 
         $mainCfg = Config::storage()->get('main.php' , false , false);
+
+        //print_r($mainCfg);
+
         $writePath = $mainCfg->getWritePath();
 
         if(!is_dir(dirname($writePath)) && !@mkdir($writePath , 0655, true)){
@@ -466,9 +469,11 @@ class Install_Controller {
             'iv_field' => 'enc_key'
         );
 
+       // print_r($mainCfg);
+//die();
         $encFields = Config::storage()->get($mainCfg->get('object_configs').'/enc/config.php', false , false);
         $encFields->setData($encConfig);
-
+      //  die('assssdasdasd');
         if(!$encFields->save())
             Response::jsonError($this->localization->get('CANT_WRITE_FS') . ' '.$encFields->getWritePath());
 
