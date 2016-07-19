@@ -12,5 +12,5 @@ $wwwRoot = '/';
 $language = 'en';
 
 return array(
-    'development' =>1,
+    'development' =>0,
 );
