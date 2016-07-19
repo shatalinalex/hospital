@@ -22,16 +22,8 @@
     'fields' => 
     array (
       'hospital_id' => 'Hospital',
-      'client_id' => 'Client',
       'doctor_id' => 'Doctor',
       'booking_date' => 'Booking date',
-    ),
-  ),
-  'client' => 
-  array (
-    'title' => 'Client',
-    'fields' => 
-    array (
       'title' => 'Title',
     ),
   ),

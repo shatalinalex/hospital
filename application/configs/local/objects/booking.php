@@ -32,22 +32,6 @@
       'db_default' => false,
       'db_unsigned' => true,
     ),
-    'client_id' => 
-    array (
-      'type' => 'link',
-      'unique' => '',
-      'db_isNull' => false,
-      'required' => true,
-      'validator' => '',
-      'link_config' => 
-      array (
-        'link_type' => 'object',
-        'object' => 'client',
-      ),
-      'db_type' => 'bigint',
-      'db_default' => false,
-      'db_unsigned' => true,
-    ),
     'doctor_id' => 
     array (
       'type' => 'link',
@@ -73,6 +57,19 @@
       'validator' => '',
       'db_type' => 'date',
       'db_default' => false,
+    ),
+    'title' => 
+    array (
+      'type' => '',
+      'unique' => '',
+      'db_isNull' => false,
+      'required' => true,
+      'validator' => '',
+      'db_type' => 'varchar',
+      'db_default' => false,
+      'db_len' => 255,
+      'is_search' => true,
+      'allow_html' => false,
     ),
   ),
   'indexes' => 
