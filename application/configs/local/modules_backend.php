@@ -19,4 +19,14 @@
     'icon' => 'i/system/icons/hosp.png',
     'id' => 'Hospital',
   ),
+  'Booking' => 
+  array (
+    'dev' => false,
+    'active' => true,
+    'class' => 'Backend_Booking_Controller',
+    'designer' => '/booking.designer.dat',
+    'in_menu' => true,
+    'icon' => 'i/system/icons/med.png',
+    'id' => 'Booking',
+  ),
 ); 

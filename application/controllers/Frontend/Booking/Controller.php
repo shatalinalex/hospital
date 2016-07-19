@@ -85,4 +85,75 @@ class Frontend_Booking_Controller extends Frontend_Controller
             )
         );
     }
+
+    public function hospitalAction(){
+        $dId = Request::post('did','integer',false);
+
+        if(!$dId)
+            Response::jsonError('empty');
+
+        //получаем больницы где работает доктор
+        $hospital_doctors_id_to_doctorModel = Model::factory('hospital_doctors_id_to_doctor');
+        $data = $hospital_doctors_id_to_doctorModel->getList(false,array(
+            new Db_Select_Filter('target_id',$dId,Db_Select_Filter::EQ)
+        ),array('source_id'));
+
+        if(empty($data))
+            Response::jsonError('empty');
+
+        $hId = Utils::fetchCol('source_id',$data);
+        $hId = array_unique($hId);
+
+        $modelHospital = Model::factory('hospital');
+        $data = $modelHospital->getList(false,array(
+            new Db_Select_Filter('id',$hId,Db_Select_Filter::IN),
+        ),array('id','title'));
+
+        Response::jsonSuccess($data);
+
+    }
+
+    public function saveAction(){
+        $flname = Request::post('flname','string',false);
+        $doctor = Request::post('doctor','integer',false);
+        $actualDate = Request::post('actualDate','string',false);
+        $hospital = Request::post('hospital','integer',false);
+
+        if(empty($flname))
+            Response::jsonError('Enter name','flname');
+        if(empty($doctor))
+            Response::jsonError('Select doctor','$doctor');
+        if(empty($actualDate))
+            Response::jsonError('Select date','actualDate');
+        if(empty($hospital))
+            Response::jsonError('Select hospital','hospital');
+
+        //дата свободна?
+        if(Model::factory('booking')->checkDate($doctor,$actualDate))
+            Response::jsonError('Busy on this date','actualDate');
+
+        //получаем больницы где работает доктор
+        $hospital_doctors_id_to_doctorModel = Model::factory('hospital_doctors_id_to_doctor');
+        $data = $hospital_doctors_id_to_doctorModel->getList(false,array(
+            new Db_Select_Filter('target_id',$doctor,Db_Select_Filter::EQ),
+            new Db_Select_Filter('source_id',$hospital,Db_Select_Filter::EQ)
+        ),array('source_id'));
+
+        if(empty($data))
+            Response::jsonError('Wrong hospital','hospital');
+
+       try{
+            $object = new Db_Object('booking');
+           $object->set('booking_date',$actualDate);
+           $object->set('doctor_id',$doctor);
+           $object->set('hospital_id',$hospital);
+           $object->set('title',$flname);
+           $object->save();
+       }catch (Exception $e)
+       {
+           Response::jsonError('save error');
+       }
+
+        Response::jsonSuccess();
+    }
 }
