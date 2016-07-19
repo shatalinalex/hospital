@@ -17,7 +17,7 @@ class Frontend_Booking_Controller extends Frontend_Controller
 
         //doctorlist
         $docModel = Model::factory('doctor');
-        $docData = $docModel->getList(false,false,array('id','title'));
+        $docData = $docModel->getList(false,false,array('id','title'),true);
         if(!empty($docData))
             $docData = Utils::collectData('id','title',$docData);
         $template->doctors = $docData;
@@ -46,7 +46,7 @@ class Frontend_Booking_Controller extends Frontend_Controller
         $bookingData = $modelBooking->getList(false,array(
             new Db_Select_Filter('booking_date',date('Y-m-d'),Db_Select_Filter::GT),
             new Db_Select_Filter('doctor_id',$dId,Db_Select_Filter::EQ)
-        ),array('booking_date','title','hospital_id'));
+        ),array('booking_date','title','hospital_id'),true);
 
         if(empty($bookingData))
             Response::jsonSuccess(array());
@@ -59,7 +59,7 @@ class Frontend_Booking_Controller extends Frontend_Controller
             $modelHospital = Model::factory('hospital');
             $hospitalData = $modelHospital->getList(false,array(
                 new Db_Select_Filter('id',$hIds,Db_Select_Filter::IN),
-            ),array('id','title'));
+            ),array('id','title'),true);
             if(!empty($hospitalData))
                 $hospitalData = Utils::collectData('id','title',$hospitalData);
 
@@ -96,7 +96,7 @@ class Frontend_Booking_Controller extends Frontend_Controller
         $hospital_doctors_id_to_doctorModel = Model::factory('hospital_doctors_id_to_doctor');
         $data = $hospital_doctors_id_to_doctorModel->getList(false,array(
             new Db_Select_Filter('target_id',$dId,Db_Select_Filter::EQ)
-        ),array('source_id'));
+        ),array('source_id'),true);
 
         if(empty($data))
             Response::jsonError('empty');
@@ -107,7 +107,7 @@ class Frontend_Booking_Controller extends Frontend_Controller
         $modelHospital = Model::factory('hospital');
         $data = $modelHospital->getList(false,array(
             new Db_Select_Filter('id',$hId,Db_Select_Filter::IN),
-        ),array('id','title'));
+        ),array('id','title'),true);
 
         Response::jsonSuccess($data);
 
@@ -137,7 +137,7 @@ class Frontend_Booking_Controller extends Frontend_Controller
         $data = $hospital_doctors_id_to_doctorModel->getList(false,array(
             new Db_Select_Filter('target_id',$doctor,Db_Select_Filter::EQ),
             new Db_Select_Filter('source_id',$hospital,Db_Select_Filter::EQ)
-        ),array('source_id'));
+        ),array('source_id'),true);
 
         if(empty($data))
             Response::jsonError('Wrong hospital','hospital');
