@@ -1,5 +1,5 @@
 <?php return array (
-  'username' => 'root',
+  'username' => 'hosp',
   'password' => '123456789',
   'dbname' => 'hospital',
   'host' => 'localhost',
